@@ -67,6 +67,7 @@ group :development do
   gem "omniauth"
   gem "omniauth-github"
   gem 'dotenv-rails'
+  gem "binding_of_caller"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
