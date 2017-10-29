@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
         # redirect_to root_path
       else
         flash[:status] = :success
-        flash[:result_text] = "Successfully logged in as existing user #{@user.username}"
+        flash[:result_text] = "Successfully logged in as existing user #{user.name}"
         redirect_to root_path
       end
 
