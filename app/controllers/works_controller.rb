@@ -16,7 +16,7 @@ class WorksController < ApplicationController
 
   def new
     @work = Work.new
-    if session[:user_id]
+    if @login_user
       @work.user_id = session[:user_id]
     end
   end
@@ -45,7 +45,7 @@ class WorksController < ApplicationController
 
   def update
     @work.update_attributes(media_params)
-    
+
     unless @login_user.id == @work.user_id
       flash[:status] = :failure
       flash[:result_text] = "You must be the owner of the work to do that!"

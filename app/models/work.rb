@@ -2,7 +2,9 @@ class Work < ApplicationRecord
   CATEGORIES = %w(album book movie)
   has_many :votes, dependent: :destroy
   has_many :ranking_users, through: :votes, source: :user
-  belongs_to :user
+  # added `optional: true` because I was unable to create a new work when logged in
+  # is this okay?
+  belongs_to :user, optional: true
 
   validates :category,  presence: true,
                         inclusion: { in: CATEGORIES }
@@ -16,7 +18,7 @@ class Work < ApplicationRecord
   # our validations are rather strict about what's OK.
   before_validation :fix_category
 
-  
+
 
   def self.to_category_hash
     data = {}
