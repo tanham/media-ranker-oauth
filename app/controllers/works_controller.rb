@@ -45,6 +45,12 @@ class WorksController < ApplicationController
 
   def update
     @work.update_attributes(media_params)
+    
+    unless @login_user.id == @work.user_id
+      flash[:status] = :failure
+      flash[:result_text] = "You must be the owner of the work to do that!"
+    end
+
     if @work.save
       flash[:status] = :success
       flash[:result_text] = "Successfully updated #{@media_category.singularize} #{@work.id}"
@@ -58,10 +64,16 @@ class WorksController < ApplicationController
   end
 
   def destroy
-    @work.destroy
-    flash[:status] = :success
-    flash[:result_text] = "Successfully destroyed #{@media_category.singularize} #{@work.id}"
-    redirect_to root_path
+    if @login_user.id == @work.user_id
+      @work.destroy
+      flash[:status] = :success
+      flash[:result_text] = "Successfully destroyed #{@media_category.singularize} #{@work.id}"
+      redirect_to root_path
+    else
+      flash[:status] = :failure
+      flash[:result_text] = "You must be the owner of the work to do that!"
+      redirect_to root_path
+    end
   end
 
   def upvote
