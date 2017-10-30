@@ -16,6 +16,9 @@ class WorksController < ApplicationController
 
   def new
     @work = Work.new
+    if session[:user_id]
+      @work.user_id = session[:user_id]
+    end
   end
 
   def create
@@ -90,7 +93,7 @@ class WorksController < ApplicationController
 
 private
   def media_params
-    params.require(:work).permit(:title, :category, :creator, :description, :publication_year)
+    params.require(:work).permit(:title, :category, :creator, :description, :publication_year, :user_id)
   end
 
   def category_from_work
