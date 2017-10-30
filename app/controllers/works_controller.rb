@@ -64,6 +64,12 @@ class WorksController < ApplicationController
   end
 
   def destroy
+    # tried using the following block but it would allow a user to delete works that were not theirs
+    # unless @login_user.id == @work.user_id
+    #   flash[:status] = :failure
+    #   flash[:result_text] = "You must be the owner of the work to do that!"
+    # end
+
     if @login_user.id == @work.user_id
       @work.destroy
       flash[:status] = :success
